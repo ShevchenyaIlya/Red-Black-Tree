@@ -62,6 +62,13 @@ int main() {
     tree.preorder();
     cout << endl << tree.vertexCount();
     cout << endl << tree.lovestCommonAncestor(50, 50)->dataField;
-    cout << endl << tree.blackHeight(tree.getRoot());
+    cout << endl << tree.blackHeight(tree.getRoot()) << endl;
+    RedBlackTree::Iterator iter(tree.begin());
+
+    while (iter != tree.end())
+    {
+        cout << iter.currentVertex->dataField << " ";
+        iter++;
+    }
     return 0;
 }

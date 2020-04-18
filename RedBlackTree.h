@@ -28,6 +28,8 @@ class RedBlackTree
     void fixRemoveViolations(Vertex *vertex);
     Vertex* deleteVertex(Vertex *vertex, int key);
     int vertexDepth(Vertex *vertex);
+    static Vertex *next(Vertex *vertex);
+    static Vertex *prev(Vertex *vertex);
 
     void inorderTraversal(Vertex *vertex);
     void preorderTraversal(Vertex *vertex);
@@ -45,11 +47,25 @@ public:
     int vertexCount();
     int blackHeight(Vertex *vertex);
 
+    class Iterator;
+    Iterator begin();
+    Iterator end();
 
     void inorder();
     void preorder();
     void postorder();
     void levelOrder();
+    class Iterator {
+    public:
+        Vertex* currentVertex;
+        Iterator(Vertex* first) : currentVertex(first) {}
+
+        Vertex& operator ++ ();
+        Vertex& operator -- ();
+        Vertex& operator ++ (int);
+        Vertex& operator -- (int);
+        bool operator != (const Iterator &it);
+    };
 };
 
 #endif //TREE_REDBLACKTREE_H

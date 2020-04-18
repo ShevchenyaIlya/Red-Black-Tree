@@ -538,3 +538,77 @@ Vertex* RedBlackTree::lovestCommonAncestor(int firstKey, int secondKey)
 
     return firstVertex;
 }
+
+Vertex *RedBlackTree::next(Vertex *vertex)
+{
+    if (vertex->right != nullptr)
+        return minValue(vertex->right);
+
+    Vertex *parent = vertex->parent;
+    while (parent != nullptr && vertex == parent->right)
+    {
+        vertex = parent;
+        parent = parent->parent;
+    }
+
+    if (parent == nullptr)
+        parent = minValue(vertex);
+
+    return parent;
+}
+
+Vertex *RedBlackTree::prev(Vertex *vertex)
+{
+    if (vertex->right != nullptr)
+        return maxValue(vertex->right);
+
+    Vertex *parent = vertex->parent;
+    while (parent != nullptr && vertex == parent->left)
+    {
+        vertex = parent;
+        parent = parent->parent;
+    }
+
+    if (parent == nullptr)
+        parent = maxValue(vertex);
+
+    return parent;
+}
+
+RedBlackTree::Iterator RedBlackTree::begin()
+{
+    return minValue(this->root);
+}
+
+RedBlackTree::Iterator RedBlackTree::end()
+{
+    return maxValue(this->root);
+}
+
+Vertex& RedBlackTree::Iterator::operator++()
+{
+    currentVertex = next(Iterator::currentVertex);
+    return *currentVertex;
+}
+
+Vertex& RedBlackTree::Iterator::operator--()
+{
+    currentVertex = prev(Iterator::currentVertex);
+    return *currentVertex;
+}
+Vertex& RedBlackTree::Iterator::operator++(int)
+{
+    currentVertex = next(Iterator::currentVertex);
+    return *currentVertex;
+}
+
+Vertex& RedBlackTree::Iterator::operator--(int)
+{
+    currentVertex = prev(Iterator::currentVertex);
+    return *currentVertex;
+}
+
+bool RedBlackTree::Iterator::operator != (const Iterator &it)
+{
+    return (currentVertex != it.currentVertex);
+}
